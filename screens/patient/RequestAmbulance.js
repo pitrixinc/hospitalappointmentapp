@@ -64,6 +64,7 @@ export default function RequestAmbulance() {
           allergies,
           ambulanceType,
           status: 'pending', // Default status
+          createdAt: new Date().toDateString(),
         };
 
         const ambulanceRequestsRef = collection(db, 'ambulanceRequests');

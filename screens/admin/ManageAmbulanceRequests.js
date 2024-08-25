@@ -24,9 +24,10 @@ export default function ManageAmbulance() {
 
   const handleUpdateRequest = async (id, status) => {
     try {
-      await updateDoc(doc(db, 'ambulanceRequests', id), { status });
+      const updatedDate = new Date().toDateString();
+      await updateDoc(doc(db, 'ambulanceRequests', id), { status, updatedDate });
       Alert.alert('Success', 'Ambulance request updated successfully');
-      setAmbulanceRequests(prev => prev.map(req => req.id === id ? { ...req, status } : req));
+      setAmbulanceRequests(prev => prev.map(req => req.id === id ? { ...req, status, updatedDate } : req));
     } catch (error) {
       console.log('Error updating ambulance request:', error);
     }
@@ -54,14 +55,53 @@ export default function ManageAmbulance() {
           <Image source={{ uri: request.userImage || 'https://static.vecteezy.com/system/resources/thumbnails/036/280/650/small/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector.jpg' }} style={styles.userImage} />
           <View style={styles.infoContainer}>
             <Text style={styles.fullName}>{request.fullName}</Text>
+            <Text style={styles.location}>{request.email}</Text>
             <Text style={styles.location}>{request.location}</Text>
           </View>
         </View>
+
+        <Text style={styles.label}>Created At:</Text>
+        <TextInput style={styles.input} value={request.createdAt} editable={false} />
+        
         <Text style={styles.label}>Reason:</Text>
-        <TextInput style={styles.input} value={request.reason} editable={false} />
+        <TextInput style={styles.input} value={request.reason} editable={false} multiline />
 
         <Text style={styles.label}>Description:</Text>
-        <TextInput style={styles.input} value={request.description} editable={false} />
+        <TextInput style={styles.input} value={request.description} editable={false} multiline />
+
+        <Text style={styles.label}>Allergies:</Text>
+        <TextInput style={styles.input} value={request.allergies} editable={false} multiline />
+
+        <Text style={styles.label}>Ambulance Type:</Text>
+        <TextInput style={styles.input} value={request.ambulanceType} editable={false} />
+
+        <Text style={styles.label}>Arrival Date:</Text>
+        <TextInput style={styles.input} value={request.arrivalDateString} editable={false} />
+
+        <Text style={styles.label}>Arrival Time:</Text>
+        <TextInput style={styles.input} value={request.arrivalTime} editable={false} />
+
+        <Text style={styles.label}>Pickup Branch:</Text>
+        <TextInput style={styles.input} value={request.branch} editable={false} />
+
+        <Text style={styles.label}>Current Location:</Text>
+        <TextInput style={styles.input} value={request.currentLocation} editable={false} />
+
+        <Text style={styles.label}>Medical Condition:</Text>
+        <TextInput style={styles.input} value={request.medicalCondition} editable={false} multiline />
+
+        <Text style={styles.label}>Medications:</Text>
+        <TextInput style={styles.input} value={request.medications} editable={false} multiline />
+
+        <Text style={styles.label}>Phone Number:</Text>
+        <TextInput style={styles.input} value={request.phoneNumber} editable={false} />
+
+        <Text style={styles.label}>Status:</Text>
+        <TextInput style={styles.input} value={request.status} editable={false} />
+
+        <Text style={styles.label}>Updated Date:</Text>
+        <TextInput style={styles.input} value={request.updatedDate} editable={false} />
+
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.updateButton}

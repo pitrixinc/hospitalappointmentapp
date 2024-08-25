@@ -55,6 +55,7 @@ export default function RequestAmbulance() {
           fullName: userDetails.fullName,
           email: userDetails.email,
           location: userDetails.location,
+          userImage: userDetails.profileImage,
           phoneNumber,
           branch,
           reason,
@@ -75,7 +76,7 @@ export default function RequestAmbulance() {
         await setDoc(docRef, { ambulanceRequestId: docRef.id }, { merge: true });
 
         Alert.alert('Success', 'Your ambulance request has been successfully created.');
-        navigation.navigate('MedicalRecords');
+     //   navigation.navigate('MedicalRecords');
       }
     } catch (error) {
       Alert.alert('Error', 'There was an issue creating your ambulance request. Please try again later.');
@@ -147,14 +148,14 @@ export default function RequestAmbulance() {
           editable={false}
         />
       </TouchableOpacity>
-      
+      {showDatePicker && (
         <DateTimePicker
           value={arrivalDate}
           mode="date"
           display="default"
           onChange={handleDateChange}
         />
-      
+        )}
 
       <Text style={styles.label}>Time for Ambulance Arrival</Text>
       <RNPickerSelect

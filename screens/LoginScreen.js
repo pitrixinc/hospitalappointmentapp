@@ -1,6 +1,6 @@
 // /screens/LoginScreen.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, Image } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase/firebaseConfig';
@@ -39,6 +39,7 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <Image source={require('../assets/images/logo.jpg')} style={styles.logo} />
       <Text style={styles.title}>Login</Text>
       <TextInput
         placeholder="Email"
@@ -103,5 +104,11 @@ const styles = StyleSheet.create({
   signupText: {
     marginTop: 15,
     color: '#007BFF',
+  },
+
+  logo: {
+    width: 120,
+    height: 120,
+    marginBottom: 30,
   },
 });

@@ -182,7 +182,7 @@ export default function TrackMedication() {
 
                   <Text style={styles.medicationCreatedAt}>MEDICATION</Text>
                   <Text style={styles.medicationText}>{med.feedback}</Text>
-                  <Text style={styles.medicationStatus}>Updated on: </Text>
+                  <Text style={styles.medicationStatus}>Updated on: {med.updatedDate} </Text>
                 </View>
               </View>
             ))

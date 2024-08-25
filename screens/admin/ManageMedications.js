@@ -25,7 +25,7 @@ export default function ManageMedications() {
 
   const handleUpdateMedication = async (id) => {
     try {
-      const updatedDate = new Date().toISOString();
+      const updatedDate = new Date().toDateString();
       await updateDoc(doc(db, 'medicationRequests', id), { status: 'answered', feedback, updatedDate });
       Alert.alert('Success', 'Medication updated successfully');
       setMedications(prev => prev.map(med => med.id === id ? { ...med, status: 'answered', feedback, updatedDate } : med));
@@ -56,11 +56,12 @@ export default function ManageMedications() {
           <Image source={{ uri: medication.userImage || 'https://static.vecteezy.com/system/resources/thumbnails/036/280/650/small/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector.jpg' }} style={styles.userImage} />
           <View style={styles.infoContainer}>
             <Text style={styles.fullName}>{medication.fullName}</Text>
+            <Text style={styles.location}>{medication.email}</Text>
             <Text style={styles.location}>{medication.location}</Text>
           </View>
         </View>
         
-        <Image source={{ uri: medication.imageUrl }} style={styles.medicationAnsweredImage} />
+        <Image source={{ uri: medication.imageUrl}} style={styles.medicationAnsweredImage} />
 
         <Text style={styles.label}>Created on:</Text>
         <TextInput style={styles.input} value={medication.createdAt} editable={false} />
@@ -74,6 +75,14 @@ export default function ManageMedications() {
         <Text style={styles.label}>Status:</Text>
         <TextInput style={styles.input} value={medication.status} editable={false} />
 
+{medication.status === 'answered'  && (
+   <View>
+        <Text style={styles.label}>Updated on:</Text>
+        <TextInput style={styles.input} value={medication.updatedDate} editable={false} />
+
+        <Text style={styles.label}>Feedback:</Text>
+        <TextInput style={styles.input} value={medication.feedback} editable={false} multiline />
+        </View>)}
         {activeTab === 'unanswered' && (
           <TextInput
             style={styles.textArea}
@@ -165,7 +174,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#333',
     marginBottom: 5,
-    fontWeight: 600,
+    fontWeight: 900,
   },
   avatarContainer: {
     flexDirection: 'row',
@@ -202,7 +211,7 @@ const styles = StyleSheet.create({
   },
   medicationAnsweredImage: {
     width: '100%',
-    height: 150,
+    height: 250,
     borderRadius: 8,
    // marginRight: 12,
   },

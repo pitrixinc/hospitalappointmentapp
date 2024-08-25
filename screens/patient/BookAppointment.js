@@ -53,6 +53,7 @@ export default function BookAppointment() {
           fullName: userDetails.fullName,
           email: userDetails.email,
           location: userDetails.location,
+          userImage: userDetails.profileImage,
           contactNumber,
           appointmentDateString,
           appointmentTime,
@@ -72,7 +73,7 @@ export default function BookAppointment() {
         await setDoc(docRef, { appointmentId: docRef.id }, { merge: true });
 
         Alert.alert('Success', 'Your appointment has been successfully created.');
-        navigation.navigate('MedicalRecords');
+       // navigation.navigate('MedicalRecords');
       }
     } catch (error) {
       Alert.alert('Error', 'There was an issue creating your appointment. Please try again later.');
@@ -102,14 +103,14 @@ export default function BookAppointment() {
           editable={false}
         />
       </TouchableOpacity>
-     
+     {showDatePicker && (
         <DateTimePicker
           value={appointmentDate}
           mode="date"
           display="default"
           onChange={handleDateChange}
         />
-     
+        )}
 
       <Text style={styles.label}>Preferred Time</Text>
       <RNPickerSelect

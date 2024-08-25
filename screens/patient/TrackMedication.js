@@ -92,6 +92,7 @@ export default function TrackMedication() {
           fullName: userDetails.fullName,
           email: userDetails.email,
           location: userDetails.location,
+          userImage: userDetails.profileImage,
           medicationRequestId: medsRef.id, 
           problem, 
           imageUrl,

@@ -47,6 +47,9 @@ export default function RequestAmbulance() {
     try {
       const user = auth.currentUser;
       if (user) {
+
+        const arrivalDateString = new Date(arrivalDate).toISOString().split('T')[0];
+
         const ambulanceRequestData = {
           userId: user.uid,
           fullName: userDetails.fullName,
@@ -57,7 +60,7 @@ export default function RequestAmbulance() {
           reason,
           description,
           currentLocation: location,
-          arrivalDate,
+          arrivalDateString,
           arrivalTime,
           medicalCondition,
           medications,

@@ -46,13 +46,15 @@ export default function BookAppointment() {
     try {
       const user = auth.currentUser;
       if (user) {
+        const appointmentDateString = new Date(appointmentDate).toISOString().split('T')[0];
+
         const appointmentData = {
           userId: user.uid,
           fullName: userDetails.fullName,
           email: userDetails.email,
           location: userDetails.location,
           contactNumber,
-          appointmentDate,
+          appointmentDateString,
           appointmentTime,
           reason,
           branch,

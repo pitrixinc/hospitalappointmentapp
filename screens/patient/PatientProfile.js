@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, Image, StyleSheet } from 'react-native';
+import { View, TextInput, Button, Image, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { getDoc, doc, updateDoc } from 'firebase/firestore';
-import { auth, db } from '../../firebase/firebaseConfig'; // Import Firebase config
+import { auth, db } from '../../firebase/firebaseConfig';
+import { signOut } from 'firebase/auth'; // Import signOut function from Firebase
+import { useNavigation } from '@react-navigation/native';
 
 export default function PatientProfile() {
+  const navigation = useNavigation();
+
   const [profile, setProfile] = useState({
     fullName: '',
     email: '',
     location: '',
-    profileImage: '',
+    profileImage: '', // User's profile image
   });
 
   const user = auth.currentUser;
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const userDoc = await getDoc(doc(db, 'users', user.uid)); // Assuming user data is stored under 'users' collection
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
       if (userDoc.exists()) {
         setProfile(userDoc.data());
       }
@@ -28,10 +32,17 @@ export default function PatientProfile() {
     alert('Profile updated successfully!');
   };
 
+  const handleLogout = async () => {
+    await signOut(auth); // Sign out the user
+    alert('You logged out successfully!');
+    // You might want to navigate the user to the login screen after logout
+    navigation.replace('Onboarding');
+  };
+
   return (
     <View style={styles.container}>
       <Image
-        source={{ uri: profile.profileImage }}
+        source={{ uri: profile.profileImage || '../../assets/images/default_profile.jpg' }} // Default image if profileImage is empty
         style={styles.profileImage}
       />
       <TextInput
@@ -54,6 +65,11 @@ export default function PatientProfile() {
         placeholder="Location"
       />
       <Button title="Update Profile" onPress={handleUpdate} />
+
+      {/* Styled Logout Button */}
+      <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+        <Text style={styles.logoutButtonText}>Logout</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -61,6 +77,9 @@ export default function PatientProfile() {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#f5f5f5',
   },
   profileImage: {
     width: 100,
@@ -68,10 +87,25 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginBottom: 20,
     alignSelf: 'center',
+    borderWidth: 2,
+    borderColor: '#2980B9',
   },
   input: {
     borderBottomWidth: 1,
     marginBottom: 20,
     padding: 10,
+    fontSize: 16,
+  },
+  logoutButton: {
+    backgroundColor: '#E74C3C',
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  logoutButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });

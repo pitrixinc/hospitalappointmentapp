@@ -24,8 +24,10 @@ export default function LoginScreen({ navigation }) {
         // Navigate to the appropriate dashboard based on userType
         if (userType === 'admin') {
           navigation.navigate('AdminDashboard');
-        } else {
+        } else if (userType === 'patient') {
           navigation.navigate('PatientDashboard');
+        } else if (userType === 'doctor') {
+          navigation.navigate('DoctorDashboard');
         }
       } else {
         console.error('No such user document!');
@@ -39,7 +41,7 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/images/logo.jpg')} style={styles.logo} />
+      <Image source={require('../assets/images/logo1.jpg')} style={styles.logo} />
       <Text style={styles.title}>Login</Text>
       <TextInput
         placeholder="Email"

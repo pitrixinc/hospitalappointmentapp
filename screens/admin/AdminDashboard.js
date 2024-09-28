@@ -10,6 +10,7 @@ import ManageAmbulanceRequests from './ManageAmbulanceRequests';
 import ManageAppointments from './ManageAppointments'
 import ManageMedications from './ManageMedications';
 import ManageUsers from './ManageUsers';
+import ManageMedicationAlert from './ManageMedicationAlert';
 
 
 const Tab = createBottomTabNavigator();
@@ -55,8 +56,11 @@ export default function AdminDashboard() {
             case 'Manage Ambulance Requests':
               iconName = 'car-outline';
               break;
-            case 'Manage Medications':
+              case 'Manage Medication Reminder':
               iconName = 'medkit-outline';
+              break;
+            case 'Manage Patients Questions':
+              iconName = 'person-outline';
               break;
             default:
               iconName = 'person-outline';
@@ -71,7 +75,8 @@ export default function AdminDashboard() {
       <Tab.Screen name="Manage Users" component={ManageUsers} />
       <Tab.Screen name="Manage Appointments" component={ManageAppointments} />
       <Tab.Screen name="Manage Ambulance Requests" component={ManageAmbulanceRequests} />
-      <Tab.Screen name="Manage Medications" component={ManageMedications} />
+      <Tab.Screen name="Manage Medication Reminder" component={ManageMedicationAlert} />
+      <Tab.Screen name="Manage Patients Questions" component={ManageMedications} />
       <Tab.Screen name="Profile" component={AdminProfile} />
     </Tab.Navigator>
   );

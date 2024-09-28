@@ -54,7 +54,7 @@ export default function ManageUsers() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Manage Users</Text>
+      <Text style={styles.title}>Manage Patients</Text>
 
       <View style={styles.searchContainer}>
         <TextInput 
@@ -72,18 +72,12 @@ export default function ManageUsers() {
         >
           <Text style={styles.tabText}>Patients</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
-          style={[styles.tab, selectedTab === 'doctor' && styles.activeTab]}
-          onPress={() => setSelectedTab('doctor')}
-        >
-          <Text style={styles.tabText}>Doctors</Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
+     {/*}   <TouchableOpacity 
           style={[styles.tab, selectedTab === 'admin' && styles.activeTab]}
           onPress={() => setSelectedTab('admin')}
         >
           <Text style={styles.tabText}>Admins</Text>
-        </TouchableOpacity>
+  </TouchableOpacity> */}
       </View>
 
       <ScrollView horizontal style={styles.tableContainer}>
@@ -93,8 +87,8 @@ export default function ManageUsers() {
             <Text style={styles.tableHeaderText}>Full Name</Text>
             <Text style={styles.tableHeaderText}>Email</Text>
             <Text style={styles.tableHeaderText}>Location</Text>
-            <Text style={styles.tableHeaderText}>User Type</Text>
-            <Text style={styles.tableHeaderText}>Actions</Text>
+          {/*  <Text style={styles.tableHeaderText}>User Type</Text>
+            <Text style={styles.tableHeaderText}>Actions</Text> */}
           </View>
 
           {filteredUsers.length > 0 ? (
@@ -120,13 +114,12 @@ export default function ManageUsers() {
                   value={user.location}
                   onChangeText={(text) => handleUpdate(user.id, { location: text })}
                 />
-                <Picker
+               {/* <Picker
                   selectedValue={user.userType}
                   style={styles.picker}
                   onValueChange={(itemValue) => handleUpdate(user.id, { userType: itemValue })}
                 >
                   <Picker.Item label="Patient" value="patient" />
-                  <Picker.Item label="Doctor" value="doctor" />
                   <Picker.Item label="Admin" value="admin" />
                 </Picker>
                 <View style={styles.actionsContainer}>
@@ -138,7 +131,7 @@ export default function ManageUsers() {
                   <TouchableOpacity style={styles.updateButton} onPress={() => handleUpdate(user.id, user)}>
                     <Text style={styles.buttonText}>Update</Text>
                   </TouchableOpacity>
-                </View>
+                </View> */}
               </View>
             ))
           ) : (

@@ -1,19 +1,21 @@
+// /screens/admin/AdminDashboard.js
 import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'react-native';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../../firebase/firebaseConfig'; // Import Firebase config
-import PatientProfile from './PatientProfile';
-import BookAppointment from './BookAppointment';
-import RequestAmbulance from './RequestAmbulance';
-import TrackMedication from './TrackMedication';
-import MedicalRecords from './MedicalRecords';
-import AskDoctor from './AskDoctor';
+import DoctorProfile from './DoctorProfile';
+import ManageAmbulanceRequests from './ManageAmbulanceRequests';
+import ManageAppointments from './ManageAppointments'
+import ManageMedications from './ManageMedications';
+import ManageUsers from './ManageUsers';
+import ManageMedicationAlert from './ManageMedicationAlert';
+
 
 const Tab = createBottomTabNavigator();
 
-export default function PatientDashboard() {
+export default function DoctorDashboard() {
   const [profileImage, setProfileImage] = useState(null);
 
   useEffect(() => {
@@ -45,19 +47,19 @@ export default function PatientDashboard() {
 
           let iconName;
           switch (route.name) {
-            case 'Medical Records':
-              iconName = 'document-text-outline';
+            case 'Manage Patients':
+              iconName = 'accessibility-outline';
               break;
-            case 'Book Appointment':
+            case 'Manage Appointments':
               iconName = 'calendar-outline';
               break;
-            case 'Request Ambulance':
-              iconName = 'car-sport-outline';
+            case 'Manage Ambulance Requests':
+              iconName = 'car-outline';
               break;
-            case 'Track Medication':
+              case 'Manage Medication Reminder':
               iconName = 'medkit-outline';
               break;
-              case 'Ask Doctor':
+            case 'Manage Patients Questions':
               iconName = 'person-outline';
               break;
             default:
@@ -70,12 +72,12 @@ export default function PatientDashboard() {
         tabBarInactiveTintColor: 'gray',
       })}
     >
-      <Tab.Screen name="Medical Records" component={MedicalRecords} />
-      <Tab.Screen name="Book Appointment" component={BookAppointment} />
-      <Tab.Screen name="Request Ambulance" component={RequestAmbulance} />
-      <Tab.Screen name="Track Medication" component={TrackMedication} />
-      <Tab.Screen name="Ask Doctor" component={AskDoctor} />
-      <Tab.Screen name="Profile" component={PatientProfile} />
+      <Tab.Screen name="Manage Patients" component={ManageUsers} />
+      <Tab.Screen name="Manage Appointments" component={ManageAppointments} />
+      <Tab.Screen name="Manage Ambulance Requests" component={ManageAmbulanceRequests} />
+      <Tab.Screen name="Manage Medication Reminder" component={ManageMedicationAlert} />
+      <Tab.Screen name="Manage Patients Questions" component={ManageMedications} />
+      <Tab.Screen name="Profile" component={DoctorProfile} />
     </Tab.Navigator>
   );
 }

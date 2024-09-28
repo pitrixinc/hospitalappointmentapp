@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "HospitalAppointment",
+    "name": "Health Pal",
     "slug": "HospitalAppointment",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -23,6 +23,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e5f55520-0a5a-41a7-9ab8-9132469687b4"
+      }
     }
   }
 }

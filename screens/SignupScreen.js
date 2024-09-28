@@ -58,11 +58,11 @@ export default function SignupScreen({ navigation }) {
       return;
     }
 
-    if (!profileImage) {
+   {/* if (!profileImage) {
       Alert.alert('Profile Image Required', 'Please select a profile image.');
       return;
     }
-
+  */}
     setLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -89,7 +89,7 @@ export default function SignupScreen({ navigation }) {
         email,
         password,
         location,
-        profileImage: imageUrl,
+        profileImage: imageUrl || 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg',
         userType: 'patient',
         createdAt: new Date().toISOString(),
       });

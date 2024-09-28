@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity,  Modal, Pressable, Alert  } from 'react-native';
+import { collection, query, where, getDocs, doc, getDoc, deleteDoc } from 'firebase/firestore';
 import { db, auth } from '../../firebase/firebaseConfig';
 import { MaterialIcons, FontAwesome5, FontAwesome } from '@expo/vector-icons';
+
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function MedicalRecords() {
@@ -13,6 +16,76 @@ export default function MedicalRecords() {
   const [appointmentTab, setAppointmentTab] = useState('pending');
   const [ambulanceTab, setAmbulanceTab] = useState('pending');
   const [userDetails, setUserDetails] = useState({});
+
+
+
+  // medication reminder
+  const [medications, setMedications] = useState([]);
+  const [selectedMedication, setSelectedMedication] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const fetchMedications = async () => {
+      try {
+        const medicationQuery = query(
+          collection(db, 'medicationAlert'),
+          where('userId', '==', auth.currentUser.uid)
+        );
+        const querySnapshot = await getDocs(medicationQuery);
+        const medicationList = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setMedications(medicationList);
+      } catch (error) {
+        console.error('Error fetching medications:', error);
+      }
+    };
+
+    fetchMedications();
+  }, []);
+
+  const openModal = (medication) => {
+    setSelectedMedication(medication);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setSelectedMedication(null);
+  };
+
+
+  const deleteMedication = async () => {
+    if (selectedMedication) {
+      try {
+        // Deleting the medication from Firestore
+        await deleteDoc(doc(db, 'medicationAlert', selectedMedication.id));
+
+        // Remove the deleted medication from the local state
+        setMedications(medications.filter((med) => med.id !== selectedMedication.id));
+
+        // Close the modal after deletion
+        closeModal();
+
+        Alert.alert('Success', 'Medication deleted successfully');
+      } catch (error) {
+        console.error('Error deleting medication:', error);
+        Alert.alert('Error', 'Failed to delete the medication. Please try again.');
+      }
+    }
+  };
+
+
+
+
+
+ 
+
+
+
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -92,6 +165,81 @@ export default function MedicalRecords() {
         Welcome to your Medical Records. Here you can view a summary of your recent appointments and ambulance requests.
       </Text>
       </View>
+
+      {/** Medication reminder */}
+      <Text style={styles.sectionTitle}>Medication Reminders</Text>
+
+{medications.length > 0 ? (
+  medications.map((medication) => (
+    <TouchableOpacity
+      key={medication.id}
+      style={styles.medicationCard}
+      onPress={() => openModal(medication)}
+    >
+      <View style={styles.medicationInfo}>
+        <Icon name="medkit" size={30} color="#fff" style={styles.medkitIcon} />
+        <View>
+          <Text style={styles.medicationName}>{medication.medicationName}</Text>
+          <Text style={styles.medicationTime}>
+            {medication.startTime} - {medication.endTime}
+          </Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  ))
+) : (
+  <Text style={styles.noMedicationsText}>No medications found.</Text>
+)}
+
+{selectedMedication && (
+  <Modal
+    animationType="slide"
+    transparent={true}
+    visible={modalVisible}
+    onRequestClose={closeModal}
+  >
+    <View style={styles.modalOverlay}>
+      <View style={styles.modalContent}>
+        <View style={styles.modalHeader}>
+          <Text style={styles.modalTitle}>Medication Details</Text>
+          <Pressable onPress={closeModal}>
+            <Icon name="close" size={24} color="#333" />
+          </Pressable>
+        </View>
+
+        <View style={styles.modalBody}>
+          <Text style={styles.modalText}>
+            <Text style={styles.modalLabel}>Medication Name: </Text>
+            {selectedMedication.medicationName}
+          </Text>
+          <Text style={styles.modalText}>
+            <Text style={styles.modalLabel}>Description: </Text>
+            {selectedMedication.description}
+          </Text>
+          <Text style={styles.modalText}>
+            <Text style={styles.modalLabel}>Duration: </Text>
+            {selectedMedication.duration} days
+          </Text>
+          <Text style={styles.modalText}>
+            <Text style={styles.modalLabel}>Times: </Text>
+            {selectedMedication.startTime} - {selectedMedication.endTime}
+          </Text>
+          <Text style={styles.modalText}>
+            <Text style={styles.modalLabel}>Created On: </Text>
+            {selectedMedication.createdAt}
+          </Text>
+
+          {/* Styled Delete Button */}
+          <TouchableOpacity style={styles.deleteButton} onPress={deleteMedication}>
+                  <Text style={styles.deleteButtonText}>Delete Medication</Text>
+          </TouchableOpacity>
+
+        </View>
+      </View>
+    </View>
+  </Modal>
+)}
+
 
       {/* Appointment Summary Section */}
       <View style={styles.section}>
@@ -371,5 +519,107 @@ const styles = StyleSheet.create({
     color: '#333333',
     flex: 1,
     textAlign: 'right',
+  },
+
+
+
+
+
+
+
+title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#2980B9',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  medicationCard: {
+    backgroundColor: '#2980B9',
+    padding: 20,
+    borderRadius: 10,
+    marginBottom: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 5,
+  },
+  medicationInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  medkitIcon: {
+    marginRight: 15,
+  },
+  medicationName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  medicationTime: {
+    fontSize: 14,
+    color: '#fff',
+  },
+  noMedicationsText: {
+    textAlign: 'center',
+    fontSize: 16,
+    color: '#777',
+    marginTop: 50,
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+    paddingBottom: 40,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 10,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#2980B9',
+  },
+  modalBody: {
+    paddingTop: 10,
+  },
+  modalText: {
+    fontSize: 16,
+    marginBottom: 10,
+    color: '#333',
+  },
+  modalLabel: {
+    fontWeight: 'bold',
+    color: '#2980B9',
+  },
+  deleteButton: {
+    backgroundColor: '#E74C3C',
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  deleteButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });

@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   activeTab: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#32CD32',
   },
   tabText: {
     color: '#fff',
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   updateButton: {
-    backgroundColor: '#28a745',
+    backgroundColor: '#32CD32',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 8,

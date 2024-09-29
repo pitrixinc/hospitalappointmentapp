@@ -52,7 +52,7 @@ export default function PatientDashboard() {
               iconName = 'calendar-outline';
               break;
             case 'Request Ambulance':
-              iconName = 'car-sport-outline';
+              iconName = 'bus-outline';
               break;
             case 'Track Medication':
               iconName = 'medkit-outline';
@@ -66,7 +66,7 @@ export default function PatientDashboard() {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#007BFF',
+        tabBarActiveTintColor: '#32CD32',
         tabBarInactiveTintColor: 'gray',
       })}
     >

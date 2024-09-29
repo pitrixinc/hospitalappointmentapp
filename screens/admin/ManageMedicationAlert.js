@@ -145,12 +145,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#2980B9',
+    color: '#32CD32',
     textAlign: 'center',
     marginBottom: 20,
   },
   medicationCard: {
-    backgroundColor: '#2980B9',
+    backgroundColor: '#32CD32',
     padding: 20,
     borderRadius: 10,
     marginBottom: 15,
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#2980B9',
+    color: '#32CD32',
   },
   modalBody: {
     paddingTop: 10,
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
   },
   modalLabel: {
     fontWeight: 'bold',
-    color: '#2980B9',
+    color: '#32CD32',
   },
 
   closeButton: {

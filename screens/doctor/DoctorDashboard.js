@@ -54,7 +54,7 @@ export default function DoctorDashboard() {
               iconName = 'calendar-outline';
               break;
             case 'Manage Ambulance Requests':
-              iconName = 'car-outline';
+              iconName = 'bus-outline';
               break;
               case 'Manage Medication Reminder':
               iconName = 'medkit-outline';
@@ -68,7 +68,7 @@ export default function DoctorDashboard() {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#007BFF',
+        tabBarActiveTintColor: '#32CD32',
         tabBarInactiveTintColor: 'gray',
       })}
     >

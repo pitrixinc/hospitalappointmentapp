@@ -207,7 +207,7 @@ const styles = {
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#32CD32',
     marginBottom: 12,
   },
   input: {
@@ -240,7 +240,7 @@ const styles = {
     borderRadius: 8,
   },
   submitButton: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#32CD32',
     padding: 16,
     borderRadius: 8,
     alignItems: 'center',
@@ -263,7 +263,7 @@ const styles = {
     marginHorizontal: 4,
   },
   activeTab: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#32CD32',
   },
   tabText: {
     color: '#333',

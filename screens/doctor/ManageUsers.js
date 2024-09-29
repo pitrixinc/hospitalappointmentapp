@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#007BFF',
+    color: '#32CD32',
     marginBottom: 20,
   },
   searchContainer: {
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   activeTab: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#32CD32',
   },
   tabText: {
     fontSize: 16,
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   },
   tableHeader: {
     flexDirection: 'row',
-    backgroundColor: '#007BFF',
+    backgroundColor: '#32CD32',
     padding: 10,
   },
   tableHeaderText: {

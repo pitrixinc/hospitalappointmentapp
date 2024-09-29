@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#2980B9',
+    color: '#32CD32',
     marginBottom: 20,
     textAlign: 'center',
   },
@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
+    color: '#32CD32',
   },
   input: {
     flex: 1,
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   submitButton: {
-    backgroundColor: '#2980B9',
+    backgroundColor: '#32CD32',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',

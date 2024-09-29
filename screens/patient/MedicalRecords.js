@@ -396,7 +396,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f0f5',
   },
   greetingView: {
-    backgroundColor: '#0984e3',
+    backgroundColor: '#32CD32',
     padding: 10,
     borderRadius: 8,
     marginBottom: 20,
@@ -420,7 +420,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#0984e3',
+    color: '#32CD32',
     marginBottom: 12,
     borderBottomWidth: 2,
     borderBottomColor: '#0984e3',
@@ -438,7 +438,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#dfe6e9',
   },
   activeTabButton: {
-    backgroundColor: '#0984e3',
+    backgroundColor: '#32CD32',
   },
   tabButtonText: {
     fontSize: 16,
